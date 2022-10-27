@@ -1,0 +1,1130 @@
+{
+	"info": {
+		"_postman_id": "edf4df16-3e1b-423d-9e73-ee959b439f07",
+		"name": "Staging Feature-User Management",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23264943"
+	},
+	"item": [
+		{
+			"name": "User Sign UP",
+			"item": [
+				{
+					"name": "Positive Test",
+					"item": [
+						{
+							"name": "1).As a user, I should be able to sign up with Valid ID that's not registered before",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"//comment \r",
+											"pm.test(\"As a user, I should be able to sign up with Valid ID that's not registered before\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code name has OK\", function () {\r",
+											"    pm.response.to.have.status(\"OK\");   \r",
+											"});\r",
+											"\r",
+											"//comment\r",
+											"\r",
+											"var jsondata=JSON.parse(responseBody)\r",
+											"\r",
+											"var schema1 = {\r",
+											"    \"$schema\": \"https://json-schema.org/draft/2019-09/schema\",\r",
+											"    \"$id\": \"http://example.com/example.json\",\r",
+											"    \"type\": \"object\",\r",
+											"    \"default\": {},\r",
+											"    \"title\": \"Root Schema\",\r",
+											"    \"required\": [\r",
+											"        \"isOtpSend\",\r",
+											"        \"email\"\r",
+											"    ],\r",
+											"    \"properties\": {\r",
+											"        \"isOtpSend\": {\r",
+											"            \"type\": \"boolean\",\r",
+											"            \"default\": false,\r",
+											"            \"title\": \"The isOtpSend Schema\",\r",
+											"            \"examples\": [\r",
+											"                true\r",
+											"            ]\r",
+											"        },\r",
+											"        \"email\": {\r",
+											"            \"type\": \"string\",\r",
+											"            \"default\": \"\",\r",
+											"            \"title\": \"The email Schema\",\r",
+											"            \"examples\": [\r",
+											"                \"Rickie65@yahoo.com\"\r",
+											"            ]\r",
+											"        }\r",
+											"    },\r",
+											"    \"examples\": [{\r",
+											"        \"isOtpSend\": true,\r",
+											"        \"email\": \"Rickie65@yahoo.com\"\r",
+											"    }]\r",
+											"}\r",
+											"\r",
+											"pm.test('Schema is valid', function () {\r",
+											"    pm.expect(tv4.validate(jsondata, schema1)).to.be.true;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code should be 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzE4ZGZkMTRhMTRjMGI3MDk1ODUyYTIiLCJyb2xlIjoidXNlciIsImVtYWlsIjoiemFocmFiaGF0dGlAaWNsb3VkLmNvbSIsImlhdCI6MTY2NjAyODY5NSwiZXhwIjoxNjY2MTE1MDk1fQ.aeTl0Er2zcHIxLhW_9Gj05XAbRZ0irhFhNuS74p6ag0",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"{{$randomEmail}}\",\n  \"name\": \"{{$randomFullName}}\",\n  \"password\": \"{{$randomPassword}}\"\n}"
+								},
+								"url": {
+									"raw": "{{test}}api/user/signup",
+									"host": [
+										"{{test}}api"
+									],
+									"path": [
+										"user",
+										"signup"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Negative Test",
+					"item": [
+						{
+							"name": "1). As a user, I should not be able to sign up with out password",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonObject = xml2Json(responseBody);\r",
+											"pm.test(\"As A user, I should not be able to sign up with out password,I should expect code 404 Please provide a password\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"zahrabhatti@icloud.com\",\n  \"name\": \"zahra\",\n  \"password\": \"\"\n}"
+								},
+								"url": {
+									"raw": "https://staging-be-ecom.techserve4u.com/api/user/signup",
+									"protocol": "https",
+									"host": [
+										"staging-be-ecom",
+										"techserve4u",
+										"com"
+									],
+									"path": [
+										"api",
+										"user",
+										"signup"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "2). As A user, I should not be able to sign up with out password and name",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"As a user, I should not be able to sign up with out password and name, I expect 404 Please provide name, please provide a password\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});\r",
+											"//schema1\r",
+											"var Jsondata=JSON.parse(responseBody)\r",
+											"\r",
+											"var schema = {\r",
+											"    \"$schema\": \"https://json-schema.org/draft/2019-09/schema\",\r",
+											"    \"$id\": \"http://example.com/example.json\",\r",
+											"    \"type\": \"object\",\r",
+											"    \"default\": {},\r",
+											"    \"title\": \"Root Schema\",\r",
+											"    \"required\": [\r",
+											"        \"name\",\r",
+											"        \"password\"\r",
+											"    ],\r",
+											"    \"properties\": {\r",
+											"        \"name\": {\r",
+											"            \"type\": \"string\",\r",
+											"            \"default\": \"\",\r",
+											"            \"title\": \"The name Schema\",\r",
+											"            \"examples\": [\r",
+											"                \"Please provide your name\"\r",
+											"            ]\r",
+											"        },\r",
+											"        \"password\": {\r",
+											"            \"type\": \"string\",\r",
+											"            \"default\": \"\",\r",
+											"            \"title\": \"The password Schema\",\r",
+											"            \"examples\": [\r",
+											"                \"Please provide a password\"\r",
+											"            ]\r",
+											"        }\r",
+											"    },\r",
+											"    \"examples\": [{\r",
+											"        \"name\": \"Please provide your name\",\r",
+											"        \"password\": \"Please provide a password\"\r",
+											"    }]\r",
+											"}\r",
+											"   \r",
+											"\r",
+											"pm.test('Schema is valid', function () {\r",
+											"\r",
+											"    pm.expect(tv4.validate(Jsondata, schema)).to.be.true;\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"zahrabhatti@icloud.com\",\n  \"name\": \"\",\n  \"password\": \"\"\n}"
+								},
+								"url": {
+									"raw": "https://staging-be-ecom.techserve4u.com/api/user/signup",
+									"protocol": "https",
+									"host": [
+										"staging-be-ecom",
+										"techserve4u",
+										"com"
+									],
+									"path": [
+										"api",
+										"user",
+										"signup"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "As A user, I should not be able to sign up with out password and name and email",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"As A user, I should not be able to sign up with out password and name and email, I expect 404 code please provide your name, please provide your email, please provide a password\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});\r",
+											"//Schema \r",
+											"Jsondata=JSON.parse(responseBody)\r",
+											"var schemaNoname = \r",
+											"{\r",
+											"    \"$schema\": \"https://json-schema.org/draft/2019-09/schema\",\r",
+											"    \"$id\": \"http://example.com/example.json\",\r",
+											"    \"type\": \"object\",\r",
+											"    \"default\": {},\r",
+											"    \"title\": \"Root Schema\",\r",
+											"    \"required\": [\r",
+											"        \"name\",\r",
+											"        \"email\",\r",
+											"        \"password\"\r",
+											"    ],\r",
+											"    \"properties\": {\r",
+											"        \"name\": {\r",
+											"            \"type\": \"string\",\r",
+											"            \"default\": \"\",\r",
+											"            \"title\": \"The name Schema\",\r",
+											"            \"examples\": [\r",
+											"                \"Please provide your name\"\r",
+											"            ]\r",
+											"        },\r",
+											"        \"email\": {\r",
+											"            \"type\": \"string\",\r",
+											"            \"default\": \"\",\r",
+											"            \"title\": \"The email Schema\",\r",
+											"            \"examples\": [\r",
+											"                \"Please provide your email address\"\r",
+											"            ]\r",
+											"        },\r",
+											"        \"password\": {\r",
+											"            \"type\": \"string\",\r",
+											"            \"default\": \"\",\r",
+											"            \"title\": \"The password Schema\",\r",
+											"            \"examples\": [\r",
+											"                \"Please provide a password\"\r",
+											"            ]\r",
+											"        }\r",
+											"    },\r",
+											"    \"examples\": [{\r",
+											"        \"name\": \"Please provide your name\",\r",
+											"        \"email\": \"Please provide your email address\",\r",
+											"        \"password\": \"Please provide a password\"\r",
+											"    }]\r",
+											"}  \r",
+											"\r",
+											"pm.test('Schema is valid', function () {\r",
+											"   \r",
+											"    pm.expect(tv4.validate(Jsondata, schemaNoname)).to.be.true;\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"\",\n  \"name\": \"\",\n  \"password\": \"\"\n}"
+								},
+								"url": {
+									"raw": "https://staging-be-ecom.techserve4u.com/api/user/signup",
+									"protocol": "https",
+									"host": [
+										"staging-be-ecom",
+										"techserve4u",
+										"com"
+									],
+									"path": [
+										"api",
+										"user",
+										"signup"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "As A user, I should not be able to sign up with invalid email",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"As a user, I should not be able to sign up with invalid email, I should get code 404 status code\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"zahrabhatti43icloud.com\",\n  \"name\": \"zahra\",\n  \"password\": \"123456\"\n}"
+								},
+								"url": {
+									"raw": "https://staging-be-ecom.techserve4u.com/api/user/signup",
+									"protocol": "https",
+									"host": [
+										"staging-be-ecom",
+										"techserve4u",
+										"com"
+									],
+									"path": [
+										"api",
+										"user",
+										"signup"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "As a user, I should not be able to sign up with an existing email",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"As a user, I should not be able to sign up with an existing email\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"//comment \r",
+											"var jsondata = JSON.parse(responseBody)\r",
+											"var schema5 ={\r",
+											"    \"$schema\": \"https://json-schema.org/draft/2019-09/schema\",\r",
+											"    \"$id\": \"http://example.com/example.json\",\r",
+											"    \"type\": \"object\",\r",
+											"    \"default\": {},\r",
+											"    \"title\": \"Root Schema\",\r",
+											"    \"required\": [\r",
+											"        \"message\"\r",
+											"    ],\r",
+											"    \"properties\": {\r",
+											"        \"message\": {\r",
+											"            \"type\": \"string\",\r",
+											"            \"default\": \"\",\r",
+											"            \"title\": \"The message Schema\",\r",
+											"            \"examples\": [\r",
+											"                \"User already registered\"\r",
+											"            ]\r",
+											"        }\r",
+											"    },\r",
+											"    \"examples\": [{\r",
+											"        \"message\": \"User already registered\"\r",
+											"    }]\r",
+											"}\r",
+											"pm.test('Schema is valid', function () {\r",
+											"    pm.expect(tv4.validate(jsondata, schema5)).to.be.true;\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"zahrabhatti@icloud.com\",\n  \"name\": \"zahra\",\n  \"password\": \"123456\"\n}"
+								},
+								"url": {
+									"raw": "https://staging-be-ecom.techserve4u.com/api/user/signup",
+									"protocol": "https",
+									"host": [
+										"staging-be-ecom",
+										"techserve4u",
+										"com"
+									],
+									"path": [
+										"api",
+										"user",
+										"signup"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "As a user, I should not be able to sign up with out name",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"As a user, I should not be able to sign up with out name\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});\r",
+											"//comment\r",
+											"var jsondata=JSON.parse(responseBody)\r",
+											"var schema6 = {\r",
+											"    \"$schema\": \"https://json-schema.org/draft/2019-09/schema\",\r",
+											"    \"$id\": \"http://example.com/example.json\",\r",
+											"    \"type\": \"object\",\r",
+											"    \"default\": {},\r",
+											"    \"title\": \"Root Schema\",\r",
+											"    \"required\": [\r",
+											"        \"name\"\r",
+											"    ],\r",
+											"    \"properties\": {\r",
+											"        \"name\": {\r",
+											"            \"type\": \"string\",\r",
+											"            \"default\": \"\",\r",
+											"            \"title\": \"The name Schema\",\r",
+											"            \"examples\": [\r",
+											"                \"Please provide your name\"\r",
+											"            ]\r",
+											"        }\r",
+											"    },\r",
+											"    \"examples\": [{\r",
+											"        \"name\": \"Please provide your name\"\r",
+											"    }]\r",
+											"}\r",
+											"\r",
+											"pm.test('Schema is valid', function () {\r",
+											"    pm.expect(tv4.validate(jsondata, schema6)).to.be.true;\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"zahrabhatti@icloud.com\",\n  \"name\": \"\",\n  \"password\": \"123456\"\n}"
+								},
+								"url": {
+									"raw": "https://staging-be-ecom.techserve4u.com/api/user/signup",
+									"protocol": "https",
+									"host": [
+										"staging-be-ecom",
+										"techserve4u",
+										"com"
+									],
+									"path": [
+										"api",
+										"user",
+										"signup"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "User Sign In",
+			"item": [
+				{
+					"name": "Positive Test",
+					"item": [
+						{
+							"name": "As a user, I should be able to sign in with a valid email and password.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"As a user, I should be able to sign in with a valid email and password.\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"//JWT token passing\r",
+											"var Jsondata=JSON.parse(responseBody)\r",
+											"pm.environment.set(\"token\", Jsondata.token);\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											"//schema validation\r",
+											"var Jsondata=JSON.parse(responseBody)\r",
+											"var schema7 = {\r",
+											"    \"$schema\": \"https://json-schema.org/draft/2019-09/schema\",\r",
+											"    \"$id\": \"http://example.com/example.json\",\r",
+											"    \"type\": \"object\",\r",
+											"    \"default\": {},\r",
+											"    \"title\": \"Root Schema\",\r",
+											"    \"required\": [\r",
+											"        \"token\"\r",
+											"    ],\r",
+											"    \"properties\": {\r",
+											"        \"token\": {\r",
+											"            \"type\": \"string\",\r",
+											"            \"default\": \"\",\r",
+											"            \"title\": \"The token Schema\",\r",
+											"            \"examples\": [\r",
+											"                \"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzE4ZGZkMTRhMTRjMGI3MDk1ODUyYTIiLCJyb2xlIjoidXNlciIsImVtYWlsIjoiemFocmFiaGF0dGlAaWNsb3VkLmNvbSIsImlhdCI6MTY2NTUxMzExMSwiZXhwIjoxNjY1NTk5NTExfQ.yiHbWetvA05t3Rfh_BhQnHTyQWy99wIKz8x-w0SPpJU\"\r",
+											"            ]\r",
+											"        }\r",
+											"    },\r",
+											"    \"examples\": [{\r",
+											"        \"token\": \"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzE4ZGZkMTRhMTRjMGI3MDk1ODUyYTIiLCJyb2xlIjoidXNlciIsImVtYWlsIjoiemFocmFiaGF0dGlAaWNsb3VkLmNvbSIsImlhdCI6MTY2NTUxMzExMSwiZXhwIjoxNjY1NTk5NTExfQ.yiHbWetvA05t3Rfh_BhQnHTyQWy99wIKz8x-w0SPpJU\"\r",
+											"    }]\r",
+											"}\r",
+											" \r",
+											"\r",
+											"pm.test('Schema is valid', function () {\r",
+											"  \r",
+											"    pm.expect(tv4.validate(Jsondata, schema7)).to.be.true;\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"password\": \"654321\",\n  \"email\": \"nawoya3941@3mkz.com\"\n}"
+								},
+								"url": {
+									"raw": "https://staging-be-ecom.techserve4u.com/api/user/signin",
+									"protocol": "https",
+									"host": [
+										"staging-be-ecom",
+										"techserve4u",
+										"com"
+									],
+									"path": [
+										"api",
+										"user",
+										"signin"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Negative Test",
+					"item": [
+						{
+							"name": "As a user, I should not be able to sign in without an email",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"As a user, I should not be able to sign in without an email\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response time is less than 200ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"password\": \"123456\",\n  \"email\": \"\"\n}"
+								},
+								"url": {
+									"raw": "https://staging-be-ecom.techserve4u.com/api/user/signin",
+									"protocol": "https",
+									"host": [
+										"staging-be-ecom",
+										"techserve4u",
+										"com"
+									],
+									"path": [
+										"api",
+										"user",
+										"signin"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "As a user, I should not be able to sign in without a password.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"As a user, I should not be able to sign in without a password. \", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});\r",
+											"// Schema Validation\r",
+											"\r",
+											"var JasonData=JSON.parse(responseBody)\r",
+											"\r",
+											"var schema8 = {\r",
+											"    \"$schema\": \"https://json-schema.org/draft/2019-09/schema\",\r",
+											"    \"$id\": \"http://example.com/example.json\",\r",
+											"    \"type\": \"object\",\r",
+											"    \"default\": {},\r",
+											"    \"title\": \"Root Schema\",\r",
+											"    \"required\": [\r",
+											"        \"password\"\r",
+											"    ],\r",
+											"    \"properties\": {\r",
+											"        \"password\": {\r",
+											"            \"type\": \"string\",\r",
+											"            \"default\": \"\",\r",
+											"            \"title\": \"The password Schema\",\r",
+											"            \"examples\": [\r",
+											"                \"Please provide a password\"\r",
+											"            ]\r",
+											"        }\r",
+											"    },\r",
+											"    \"examples\": [{\r",
+											"        \"password\": \"Please provide a password\"\r",
+											"    }]\r",
+											"}\r",
+											"pm.test('Schema is valid', function () {\r",
+											"    pm.expect(tv4.validate(JasonData, schema8)).to.be.true;\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"password\": \"\",\n  \"email\": \"zahrabhatti@icloud.com\"\n}"
+								},
+								"url": {
+									"raw": "https://staging-be-ecom.techserve4u.com/api/user/signin",
+									"protocol": "https",
+									"host": [
+										"staging-be-ecom",
+										"techserve4u",
+										"com"
+									],
+									"path": [
+										"api",
+										"user",
+										"signin"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "As a user, I should not be able to sign in without a name.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"As a user, I should not be able to sign in without a password. \", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});\r",
+											"// Schema Validation\r",
+											"\r",
+											"var JasonData=JSON.parse(responseBody)\r",
+											"\r",
+											"var schema8 = {\r",
+											"    \"$schema\": \"https://json-schema.org/draft/2019-09/schema\",\r",
+											"    \"$id\": \"http://example.com/example.json\",\r",
+											"    \"type\": \"object\",\r",
+											"    \"default\": {},\r",
+											"    \"title\": \"Root Schema\",\r",
+											"    \"required\": [\r",
+											"        \"password\"\r",
+											"    ],\r",
+											"    \"properties\": {\r",
+											"        \"password\": {\r",
+											"            \"type\": \"string\",\r",
+											"            \"default\": \"\",\r",
+											"            \"title\": \"The password Schema\",\r",
+											"            \"examples\": [\r",
+											"                \"Please provide a password\"\r",
+											"            ]\r",
+											"        }\r",
+											"    },\r",
+											"    \"examples\": [{\r",
+											"        \"password\": \"Please provide a password\"\r",
+											"    }]\r",
+											"}\r",
+											"pm.test('Schema is valid', function () {\r",
+											"    pm.expect(tv4.validate(JasonData, schema8)).to.be.true;\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"password\": \"\",\n  \"email\": \"zahrabhatti@icloud.com\"\n}"
+								},
+								"url": {
+									"raw": "https://staging-be-ecom.techserve4u.com/api/user/signin",
+									"protocol": "https",
+									"host": [
+										"staging-be-ecom",
+										"techserve4u",
+										"com"
+									],
+									"path": [
+										"api",
+										"user",
+										"signin"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Update Profile",
+			"item": [
+				{
+					"name": "Positive Test",
+					"item": [
+						{
+							"name": "As a user, I should be able to update my Mobile number.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"As a user, I should be able to update my mobile number.I should expect code 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"pm.test(\"Response time is less than 200ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzE4ZGZkMTRhMTRjMGI3MDk1ODUyYTIiLCJyb2xlIjoidXNlciIsImVtYWlsIjoiemFocmFiaGF0dGlAaWNsb3VkLmNvbSIsImlhdCI6MTY2NjAyODY5NSwiZXhwIjoxNjY2MTE1MDk1fQ.aeTl0Er2zcHIxLhW_9Gj05XAbRZ0irhFhNuS74p6ag0",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"mobile\": \"{{$randomPhoneNumber}}\",\n  \"name\": \"zahra bhatti\",\n  \"contactNumber\": \"2482193982\",\n  \"gender\": \"female\",\n  \"birthDate\": \"Dec 18 1984\"\n}"
+								},
+								"url": {
+									"raw": "https://staging-be-ecom.techserve4u.com/api/user/update",
+									"protocol": "https",
+									"host": [
+										"staging-be-ecom",
+										"techserve4u",
+										"com"
+									],
+									"path": [
+										"api",
+										"user",
+										"update"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "As a user, I should be able to update my Contact number",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"As a user, I should be able to update my profile.I should expect code 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"pm.test(\"Response time is less than 200ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzE4ZGZkMTRhMTRjMGI3MDk1ODUyYTIiLCJyb2xlIjoidXNlciIsImVtYWlsIjoiemFocmFiaGF0dGlAaWNsb3VkLmNvbSIsImlhdCI6MTY2NjAyODY5NSwiZXhwIjoxNjY2MTE1MDk1fQ.aeTl0Er2zcHIxLhW_9Gj05XAbRZ0irhFhNuS74p6ag0",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"mobile\": \"2482193982\",\n  \"name\": \"zahra bhatti\",\n  \"contactNumber\": \"{{$Randomphonenumber}}\",\n  \"gender\": \"female\",\n  \"birthDate\": \"Dec 18 1984\"\n}"
+								},
+								"url": {
+									"raw": "https://staging-be-ecom.techserve4u.com/api/user/update",
+									"protocol": "https",
+									"host": [
+										"staging-be-ecom",
+										"techserve4u",
+										"com"
+									],
+									"path": [
+										"api",
+										"user",
+										"update"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Negative Test",
+					"item": []
+				}
+			]
+		},
+		{
+			"name": "Search Bar",
+			"item": [
+				{
+					"name": "Positive Tests",
+					"item": [
+						{
+							"name": "As a user, I should be able to search products by brand name. ",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"As a user, I should be able to search products by brand name. \", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"pm.test(\"Response time is less than 200ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(900);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "https://staging-be-ecom.techserve4u.com/api/product/getsearchproducts?search=Xiaomi",
+									"protocol": "https",
+									"host": [
+										"staging-be-ecom",
+										"techserve4u",
+										"com"
+									],
+									"path": [
+										"api",
+										"product",
+										"getsearchproducts"
+									],
+									"query": [
+										{
+											"key": "search",
+											"value": "Xiaomi"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "As a user, I should be able to type anything on the search bar.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"As a user, I should be able to search products by brand name. \", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"pm.test(\"Response time is less than 200ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(900);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "https://staging-be-ecom.techserve4u.com/api/product/getsearchproducts?search=Xiaomitest",
+									"protocol": "https",
+									"host": [
+										"staging-be-ecom",
+										"techserve4u",
+										"com"
+									],
+									"path": [
+										"api",
+										"product",
+										"getsearchproducts"
+									],
+									"query": [
+										{
+											"key": "search",
+											"value": "Xiaomitest"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Negative Tests",
+					"item": []
+				}
+			]
+		}
+	]
+}
