@@ -106,11 +106,15 @@
 									"raw": "{\n  \"email\": \"{{$randomEmail}}\",\n  \"name\": \"{{$randomFullName}}\",\n  \"password\": \"{{$randomPassword}}\"\n}"
 								},
 								"url": {
-									"raw": "{{test}}api/user/signup",
+									"raw": "https://staging-be-ecom.techserve4u.com/api/user/signup",
+									"protocol": "https",
 									"host": [
-										"{{test}}api"
+										"staging-be-ecom",
+										"techserve4u",
+										"com"
 									],
 									"path": [
+										"api",
 										"user",
 										"signup"
 									]
