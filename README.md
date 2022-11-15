@@ -1,6 +1,6 @@
 # Zara_ecom_Automation
 My name is Zahra.
-This is automation testing based on https://test-ecom.techserve4u.com, We will be running test on sign up, sign in, and profile updates.
+This is automation testing based on https://test-ecom.techserve4u.com, I will be running test on Sign-up, Sign-in, Update profile and Search Bar.
 
 This postman contains the following.
 Created personal a workspace with a name and summary.
@@ -12,7 +12,6 @@ Call variable
 Snippet section:
 Schema Validation
 Faker JS
-Data Driven
 Run Collection.
 Imported test results.
 Imported environment.
